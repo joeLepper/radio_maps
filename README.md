@@ -1,4 +1,4 @@
-radio_maps
+hot_tweets
 ==========
 
-A NodeJS / AngularJS app that maps audible radio stations to Google Maps
+Providing visualizations of prolific tweeterization
