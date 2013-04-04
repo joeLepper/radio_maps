@@ -1,8 +1,10 @@
 var mongoose = require('mongoose')
   , Schema   = mongoose.Schema
   , db       = mongoose
-  							 .createConnection( 'localhost'
-  							 									, 'radio')
+  							 // .createConnection( 'localhost'
+								 	// 								, 'radio')
+  							 .createConnection( '173.255.241.26'
+								 									, 'radio')
 
   , loc = { type        : { type: String }
 	  			, coordinates : { type: mongoose.Schema.Types.Mixed } }
