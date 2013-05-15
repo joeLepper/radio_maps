@@ -9,7 +9,10 @@ function MyCtrl1($scope, $http, $filter) {
 		console.log('jqLite in the hizzy.');
 		$scope.onresize()
 		angular.element(window).on('resize',$scope.onresize);
-		$scope.$watch('centerProperty.lat', $scope.mapMove);
+
+		//commenting this out for experiment
+		// $scope.$watch('centerProperty.lat', $scope.mapMove);
+		$scope.graphItAll()
 	});
 
   angular.extend($scope, { centerProperty           : { lat: 42
@@ -38,14 +41,21 @@ function MyCtrl1($scope, $http, $filter) {
 		       , url: '/coordquery/' + lat +'/' + lng } )
 	      
 		  .success(function(data, status) {
-	        
+	      var currentStationObj = {};
+
 			  $scope.status = status;
 	      $scope.data = data;
 
 			  for(var i = 0; i < data.length; i++){
+			  	currentStationObj = data[i];
+
+			  	delete currentStationObj.broadcastType;
+			  	delete currentStationObj.callSign;
+			  	delete currentStationObj.appID;
+
 
 			  	$scope.validLocalsProperty.push(data[i].loc['coordinates']);
-			  	$scope.polygons.push(data[i].loc['coordinates']);
+			  	$scope.polygons.push(currentStationObj);
 			  };
 		  })
 			.error(function(data, status) {
@@ -152,7 +162,30 @@ function MyCtrl1($scope, $http, $filter) {
   	return forReturn;
   };
 
-  $scope.coordQuery();
+  $scope.graphItAll = function(){
+	  $http({method:"get", url: '/fullrequest'})
+	  .success(function(data,status){
+	  	console.log('returned');
+	  	console.log(data);
+	  })
+  };
+
+	var client = new BinaryClient('ws://localhost:5555')
+
+	client.on('stream',function(stream,meta){
+		var bits = [];
+
+		stream.on('data',function(data){
+			bits.push(data);
+		});
+
+		stream.on('end',function(){
+			console.log('end');
+		});
+	});
+
+
+  // $scope.coordQuery();
 
 }; //end controller
 //MyCtrl1.$inject = [];

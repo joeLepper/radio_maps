@@ -490,6 +490,7 @@
 				scope.$watch("polygons.length", function (newValue, oldValue){
 					
 					angular.forEach(scope.currentPolygons, function (obj,index){
+						console.log("// ---- OBJECT ON SCOPE.POLYGON ---- //")
 						console.log(obj);
 						if(scope.isAinB(obj, scope.polygons, 'name')){
 							// console.log('Leaving ' + obj['name'] + ' on the map.');
@@ -507,11 +508,18 @@
 					angular.forEach(scope.polygons, function (_poly){
 						console.log(_poly);
 						// if(!scope.isAinB(_poly, scope.currentPolygons, 'name')){
+							console.log('// ---HERE WE ARE, FRIEND')
+							console.log(_poly);
 							var pArray = []
 							  , gLatLng
-							  , cString = '#'+Math.floor((Math.random() + .2) * 2097151).toString(16);
+							  , cString = '' 
+							  , freqVal = _poly.frequency;
 
-							angular.forEach(_poly[0], function (_latLng){
+							  freqVal = parseInt((( freqVal - 87.8 ) * 10) / 2) + 100;
+							  console.log(freqVal);
+							  cString = 'hsl(' + freqVal +',25%,50%)'
+
+							angular.forEach(_poly.loc.coordinates[0], function (_latLng){
 								// console.log(_latLng);
 								pArray.push( new google.maps.LatLng(_latLng[1], _latLng[0]) );
 							});
@@ -522,7 +530,7 @@
 															                    , strokeOpacity : 0.15
 															                    , strokeWeight  : 3
 															                    , fillColor     : cString
-															                    , fillOpacity   : 0.1
+															                    , fillOpacity   : 0.2
 															                    , geodesic      : true});
 							_m.addPolygon(gPoly);
 							var gPolyObject = {

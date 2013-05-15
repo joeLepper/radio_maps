@@ -8,7 +8,9 @@
     "grunt": "~0.4.1",
     "mongoose": "~3.6.1",
     "unzip": "~0.1.5",
-    "fstream": "~0.1.22"
+    "fstream": "~0.1.22",
+    "newrelic": "~0.9.20",
+    "binaryjs": "~0.1.8"
   },
   "devDependencies": {},
   "scripts": {

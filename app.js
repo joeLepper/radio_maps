@@ -1,10 +1,16 @@
-var express    = require('express')
-  , app        = express()
-  , server     = require('./server')
-  , reqHandle  = require('./request')
+var newRelic   = require('newrelic')
+  , express      = require('express')
+  , Binary       = require('binaryjs').BinaryServer
+  , fs           = require('fs')
+  , app          = express()
+  , server       = require('http').createServer(app)
+  , reqHandle    = require('./request')
+
+  , binaryServer = Binary({server:server})
 
 app.use(express.static(__dirname + '/public'));
 
+server.listen(5555);
 
 app.configure(function(){
   app.use(express.bodyParser());
@@ -22,9 +28,19 @@ app.get('/parse', function(req,res){
   reqHandle.parseIt(req,res);
 });
 
+app.get('/fullrequest', function(req,res){
+  reqHandle.fullRequest(req,res);
+});
+
 app.get('/coordquery/:lat/:lng',function(req,res){
   console.log('coordQuery post')
   reqHandle.coordQuery(req,res);
 });
 
-server.start(app);
+binaryServer.on('connection', function(client){
+  reqHandle.stream(function(data){
+    var file = fs.createReadStream(data);
+    client.send(file);
+  })
+  
+})

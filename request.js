@@ -41,6 +41,16 @@ var fetcher  = require('./fetcher')
 			    res.send(results)
 		    }); 
 		}
+	, stream = function(callback){
+			radioDB.stream(callback);
+		}
+
+	, fullRequest = function(req,res){
+			radioDB.fullRequest(function(results){
+				console.log('returning data to the browser');
+				res.send(results);
+			});
+		};
 
 /* -----------------------------------
  *
@@ -57,6 +67,7 @@ var fetcher  = require('./fetcher')
 // },86400000);
 // fetcher.fetch();
 
-exports.start      = start;
-exports.radioQuery = radioQuery;
-exports.coordQuery = coordQuery;
+exports.start       = start;
+exports.fullRequest = fullRequest;
+exports.coordQuery  = coordQuery;
+exports.stream      = stream;

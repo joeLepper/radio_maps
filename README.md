@@ -1,4 +1,4 @@
-hot_tweets
+Radio, Radio
 ==========
 
-Providing visualizations of prolific tweeterization
+Visualizing the FM spectrum in the USA.

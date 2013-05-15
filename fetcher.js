@@ -16,13 +16,14 @@ var fs      = require ('fs')
   			var file = response.pipe(origin);
   			response.on('end',function(data){
 
+  				console.log("we can't be friends now")
 					fs.createReadStream('data/contours.zip')
 						.pipe(unzip.Extract({ path: 'data' })
 							.on('close',function(){
 
 			  				console.log("GOT THE ZIP")
 			  				if(readyState === 1){
-  					callParse();
+			  					callParse();
 			  				};
 			  				readyState = 1;
 				  		})

@@ -1,10 +1,10 @@
 var mongoose = require('mongoose')
 
   , Schema   = mongoose.Schema
-  // , db       = mongoose.createConnection( 'localhost'
-  // 							 									      , 'radio')
-  , db       = mongoose.createConnection( '173.255.241.26'
-											 									, 'radio')
+  , db       = mongoose.createConnection( 'localhost'
+  							 									      , 'radio')
+  // , db       = mongoose.createConnection( '173.255.241.26'
+		// 									 									, 'radio')
 
   , repeater
   , repeating = false
